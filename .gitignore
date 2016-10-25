@@ -1,9 +1,7 @@
 *.o
 
-d2q9-bgk.exe
-d2q9-bgk
-final_state.dat
-av_vels.dat
+sqrt_benchmark.exe
+sqrt_benchmark
 
 .idea/
 build/
@@ -22,7 +20,6 @@ build/
 CMakeCache.txt
 CMakeFiles
 CMakeScripts
-Makefile
 cmake_install.cmake
 install_manifest.txt
 CTestTestfile.cmake
