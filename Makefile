@@ -3,7 +3,7 @@
 EXE=sqrt_benchmark
 
 CC=icc
-CFLAGS= -std=c99 -Wall -Ofast -no-prec-div -xsse4.2 -no-prec-sqrt
+CFLAGS= -std=c99 -Wall -O0
 LIBS = -lm
 EXTRAFLAGS= -debug full
 
