@@ -45,21 +45,20 @@ int main(int argc, char* argv[])
 
   if (argc < 2) {
     printf("Please choose a sqrt method: default, rsqrt");
-  } else {
-    if (0 == strncmp("default", argv[1], 8)) {
-      default_sqrt();
-    } else if (0 == strncmp("rsqrt", argv[1], 6)) {
-      sse_rsqrt();
-    } else {
-      printf("Invalid sqrt method.");
-    }
+    return 1;
   }
 
   /* iterate for maxIters timesteps */
   gettimeofday(&timstr, NULL);
   wallclockBefore = timstr.tv_sec + (timstr.tv_usec / 1000000.0);
 
-  // CODE GOES HERE
+  if (0 == strncmp("default", argv[1], 8)) {
+    default_sqrt();
+  } else if (0 == strncmp("rsqrt", argv[1], 6)) {
+    sse_rsqrt();
+  } else {
+    printf("Invalid sqrt method.");
+  }
 
   gettimeofday(&timstr, NULL);
   wallclockAfter = timstr.tv_sec + (timstr.tv_usec / 1000000.0);
