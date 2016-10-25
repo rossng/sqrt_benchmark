@@ -11,6 +11,30 @@
 #include <xmmintrin.h>
 #include <memory.h>
 
+void default_sqrt() {
+#pragma optimize("-dead-code-removal", off)
+  for (volatile int i = 1; i < 100000; i++) {
+    sqrt(i);
+  }
+#pragma optimize("-dead-code-removal", on)
+}
+
+
+float sse_rsqrt_i(float fIn) {
+  if (fIn == 0) { return 0.0f; }
+  float fOut;
+  _mm_store_ss(&fOut, _mm_mul_ss(_mm_load_ss(&fIn), _mm_rsqrt_ss(_mm_load_ss( &fIn ))));
+  return fOut;
+}
+
+void sse_rsqrt() {
+#pragma optimize("-dead-code-removal", off)
+  for (volatile int i = 1; i < 100000; i++) {
+    sse_rsqrt_i(i);
+  }
+#pragma optimize("-dead-code-removal", on)
+}
+
 int main(int argc, char* argv[])
 {
   struct timeval timstr;                                /* structure to hold elapsed time */
@@ -23,9 +47,9 @@ int main(int argc, char* argv[])
     printf("Please choose a sqrt method: default, rsqrt");
   } else {
     if (0 == strncmp("default", argv[1], 8)) {
-
+      default_sqrt();
     } else if (0 == strncmp("rsqrt", argv[1], 6)) {
-
+      sse_rsqrt();
     } else {
       printf("Invalid sqrt method.");
     }
@@ -52,28 +76,4 @@ int main(int argc, char* argv[])
   printf("Elapsed system CPU time:\t%.6lf (s)\n", systemTime);
 
   return EXIT_SUCCESS;
-}
-
-void default_sqrt() {
-#pragma optimize("-dead-code-removal", off)
-  for (volatile int i = 1; i < 100000; i++) {
-    sqrt(i);
-  }
-#pragma optimize("-dead-code-removal", on)
-}
-
-
-inline float sse_rsqrt_i(float fIn) {
-  if (fIn == 0) { return 0.0f; }
-  float fOut;
-  _mm_store_ss(&fOut, _mm_mul_ss(_mm_load_ss(&fIn), _mm_rsqrt_ss(_mm_load_ss( &fIn ))));
-  return fOut;
-}
-
-void sse_rsqrt() {
-#pragma optimize("-dead-code-removal", off)
-  for (volatile int i = 1; i < 100000; i++) {
-    sse_rsqrt_i(i);
-  }
-#pragma optimize("-dead-code-removal", on)
 }
