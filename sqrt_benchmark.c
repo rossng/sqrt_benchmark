@@ -55,11 +55,11 @@ int main(int argc, char* argv[])
 }
 
 void default_sqrt() {
-#pragma optimize("-no-dead-code-removal")
+#pragma optimize("-dead-code-removal", off)
   for (volatile int i = 1; i < 100000; i++) {
     sqrt(i);
   }
-#pragma optimize("-dead-code-removal")
+#pragma optimize("-dead-code-removal", on)
 }
 
 
@@ -71,9 +71,9 @@ inline float sse_rsqrt_i(float fIn) {
 }
 
 void sse_rsqrt() {
-#pragma optimize("-no-dead-code-removal")
+#pragma optimize("-dead-code-removal", off)
   for (volatile int i = 1; i < 100000; i++) {
     sse_rsqrt_i(i);
   }
-#pragma optimize("-dead-code-removal")
+#pragma optimize("-dead-code-removal", on)
 }
