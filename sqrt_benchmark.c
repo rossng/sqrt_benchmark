@@ -11,9 +11,11 @@
 #include <xmmintrin.h>
 #include <memory.h>
 
+#define ITERATIONS 10000000
+
 void default_sqrt() {
 #pragma optimize("-dead-code-removal", off)
-  for (volatile int i = 1; i < 100000; i++) {
+  for (volatile int i = 0; i < ITERATIONS; i++) {
     sqrt(i);
   }
 #pragma optimize("-dead-code-removal", on)
@@ -29,7 +31,7 @@ float sse_rsqrt_i(float fIn) {
 
 void sse_rsqrt() {
 #pragma optimize("-dead-code-removal", off)
-  for (volatile int i = 1; i < 100000; i++) {
+  for (volatile int i = 0; i < ITERATIONS; i++) {
     sse_rsqrt_i(i);
   }
 #pragma optimize("-dead-code-removal", on)
